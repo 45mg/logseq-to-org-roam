@@ -1,0 +1,20 @@
+#!/bin/bash
+# Enclose Logseq block ids and block embeds in backticks.
+# This is so pandoc will turn them into Org-mode 'verbatim' notation (eg.
+# =foo=), which we can then process with elisp.
+
+# set -x
+IFS=$'\n'
+
+# Match Logseq IDs (extended regex)
+id_eregex='[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}'
+
+# Match the targets of embed/query syntax (extended regex)
+target_eregex='([0-9a-f]|\(|\)|\[|\]|-)+'
+
+# block ids
+sed -E -i 's/id:: '"$id_eregex"'/`\0`/' "$1"
+# embeds
+sed -E -i 's/\{\{ *embed '"$target_eregex"' *\}\}/`\0`/' "$1"
+# queries
+sed -i 's/{{ *query.*}}/`\0`/' "$1"

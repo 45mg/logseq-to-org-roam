@@ -1,0 +1,9 @@
+#!/bin/bash
+
+graphdir=$1
+pagepath=$(sed 's/^\///' <<<"${2#"$graphdir"}")
+title=${pagepath%.org}
+
+echo "#+title: $title" > "$2".temp
+cat "$2" >> "$2".temp
+mv "$2".temp "$2"

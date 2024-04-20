@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Move any property into a block, otherwise the pandoc org parser merges them
+# all into a single line for some reason
+sed -E -i 's/^[a-z]+::.*$/- !property-deleteme!\n  \0/' "$1"

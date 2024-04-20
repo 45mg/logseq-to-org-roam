@@ -1,0 +1,5 @@
+#!/bin/bash
+
+DIR=~/bin/scripts/logseq-migration
+
+find "${1:-.}" -wholename "*.md" -exec "$DIR"/pandoc-cmd '{}' \; -exec rm '{}' \;

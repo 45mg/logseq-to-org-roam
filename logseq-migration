@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Main script, used to convert all the files in a directory to org files. Call
+# it with the directory as argument: for example, `./logseq-migration pages`.
+# This will create a copy of `pages` called `pages_`, and the conversion will be
+# applied to all files in `pages`. Then it will copy `pages_` to `pages__`,
+# which will serve as a backup for when you do further processing on `pages_`.
+
+export scriptdir=~/bin/scripts/logseq-migration
+
+rm -r "$1"_ "$1"__
+cp -r "$1" "$1"_
+"$scriptdir"/preproc "$1"_
+"$scriptdir"/convert "$1"_
+"$scriptdir"/postproc "$1"_
+cp -r "$1"_ "$1"__

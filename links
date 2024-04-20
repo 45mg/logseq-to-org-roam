@@ -1,0 +1,14 @@
+#!/bin/bash
+# Convert Logseq link syntax into standard Markdown link syntax.
+
+# Changing the path of links to the assets folder - if you don't know why you'd
+# need this, then comment it out
+ sed -i 's/\[\.\.\/assets/\[assets/g' "$1"
+
+# Convert '[[pagename]]' links
+sed -E -i 's/\[\[(.*)\]\]/[\1](\1)/g' "$1"
+
+# Convert '#pagename' links
+sed -E -i '/```/,/```/ !s/ #([^ ]+)/ [\1](\1)/g' "$1"
+# ('!' inverts range - everywhere except in code blocks. We need this because
+# code comments may begin with '#')

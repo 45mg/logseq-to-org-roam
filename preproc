@@ -1,0 +1,6 @@
+#!/bin/bash
+# Overall preprocessing of Logseq markdown before converting to org
+
+scriptdir=~/bin/scripts/logseq-migration
+
+find "${1:-.}" -wholename "*.md" -exec "$scriptdir"/properties '{}' \; -exec "$scriptdir"/backtick '{}' \; -exec "$scriptdir"/delete '{}' \; -exec "$scriptdir"/headings '{}' \; -exec "$scriptdir"/links '{}' \; -exec "$scriptdir"/namespaces '{}' \;

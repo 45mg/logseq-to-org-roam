@@ -1,0 +1,20 @@
+#!/bin/bash
+# Convert nested lists to #, ##, ###... so that pandoc's Org converter will turn
+# them into nested headings.
+
+perl -pi -e '
+# Add an additional layer of nesting - all text in org files should be under a
+# heading
+s/^/	/;
+# Discard any existing Markdown header syntax ("#" characters after the list bullet)
+s/(	*- )#* /$1/;
+# For each level of indentation, add a "#"
+s/	(?=	*-)/#/g;
+# Finally, remove list bullets
+s/^(#*)-/$1/;
+# Remove any Tab characters remaining (eg. they will still be present in code
+# blocks)
+s/^	+//' "$1"
+
+# Add newlines between headings - apparently this is required by Markdown syntax
+sed -i -E 's/^#/\'$'\n#/' "$1"

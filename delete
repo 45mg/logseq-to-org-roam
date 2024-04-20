@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Delete 'collapsed:: '
+sed -i 's/collapsed:: .*//' "$1"

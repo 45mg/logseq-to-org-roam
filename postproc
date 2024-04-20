@@ -1,0 +1,5 @@
+#!/bin/bash
+
+scriptdir=~/bin/scripts/logseq-migration
+
+find "${1:-.}" -wholename "*.org" -exec "$scriptdir"/add_title "$1" '{}' \;

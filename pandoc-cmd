@@ -1,0 +1,4 @@
+#!/bin/bash
+# Call pandoc on a .md file to produce a .org file
+
+pandoc --wrap=none -f markdown -t org -o "${1%.*}.org" "$1"

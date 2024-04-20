@@ -1,0 +1,20 @@
+#!/bin/bash
+# Represent Logseq's 'namespaces' by moving the page files into directories.
+# For example, a page named 'a/b/c' in Logseq, whose file is named 'a___b___c',
+# will stored as 'c' in the path 'a/b'.
+
+# if the page is not under a namespace, will return the same filename
+path=$(sed 's/___/\//g' <<<"$1")
+
+dir=${path%/*.*}
+
+# echo $PWD/$dir
+# echo $PWD/$path
+mkdir -p "$PWD/$dir"
+
+old=$PWD/$1
+new=$PWD/$path
+
+# to avoid same-file errors, run `mv` only if the file would actually be moved
+# (if it was not under a namespace, $old and $new are the same thing)
+[[ $(realpath "$old") = "$(realpath "$new")" ]] || mv "$old" "$new"
